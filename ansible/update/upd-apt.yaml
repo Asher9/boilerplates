@@ -7,3 +7,20 @@
       apt:
         upgrade: yes
         update_cache: yes
+
+    - name: check if reboot is required
+      become: true
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+      
+    - name: Sending an e-mail
+      community.general.mail:
+        host: mail.prox-lab.de
+        port: 587
+        username: noreply@prox-lab.de
+        password: a$n9FvSL2r4h&g
+        to: info@prox-lab.de
+        subject: Ansible-report
+        body: Reboot required on {{ inventory_hostname }}
+      when: reboot_required.stat.exists
