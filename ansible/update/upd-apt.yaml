@@ -23,5 +23,5 @@
         to: info@prox-lab.de
         from: noreply@prox-lab.de (Ansible Semaphore)
         subject: Ansible-report
-        body: Reboot required on {{ inventory_hostname }}
+        body: Reboot required on {{ ansible_hostname }}
       when: reboot_required.stat.exists
