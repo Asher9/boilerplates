@@ -10,6 +10,7 @@
         username: noreply@prox-lab.de
         password: a$n9FvSL2r4h&g
         to: info@prox-lab.de
+        from: noreply@prox-lab.de 
         subject: Ansible-report
         body: Reboot required on {{ inventory_hostname }}
       # when: reboot_required.stat.exists
