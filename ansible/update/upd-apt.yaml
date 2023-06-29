@@ -23,4 +23,4 @@
         to: info@prox-lab.de
         subject: Ansible-report
         body: Reboot required on {{ inventory_hostname }}
-      when: reboot_required.stat.exists
+      # when: reboot_required.stat.exists
