@@ -19,7 +19,7 @@
         host: mail.prox-lab.de
         port: 587
         username: noreply@prox-lab.de
-        password: {{ mailpwd }}
+        password: ""{{ mailpwd }}""
         to: info@prox-lab.de
         from: noreply@prox-lab.de (Ansible Semaphore)
         subject: Ansible-report
