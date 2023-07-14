@@ -1,0 +1,9 @@
+- name: install core packages
+  hosts: "{{ hosts_cluster }}"
+  become: yes
+  tasks:
+  - name: install core packages
+    apt:
+      name:
+        - git
+      update_cache: yes
