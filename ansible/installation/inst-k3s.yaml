@@ -1,5 +1,5 @@
 - name: install core packages
-  hosts: ""{{ hosts_cluster }}""
+  hosts: all
   become: yes
   tasks:
   - name: install core packages
