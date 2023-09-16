@@ -1,0 +1,1 @@
+packer build -var-file="..\credentials.pkr.hcl" .\ubuntu-server-jammy-docker.pkr.hcl

@@ -17,7 +17,7 @@ variable "proxmox_api_token_secret" {
 }
 
 # Resource Definiation for the VM Template
-source "proxmox" "ubuntu-server-jammy" {
+source "proxmox-iso" "ubuntu-server-jammy-docker" {
  
     # Proxmox Connection Settings
     proxmox_url = "${var.proxmox_api_url}"
@@ -27,19 +27,22 @@ source "proxmox" "ubuntu-server-jammy" {
     # insecure_skip_tls_verify = true
     
     # VM General Settings
-    node = "your-proxmox-node"
-    vm_id = "100"
-    vm_name = "ubuntu-server-jammy"
-    template_description = "Ubuntu Server jammy Image"
+    node = "aurora"
+    vm_id = "1001"
+    vm_name = "ubuntu-server-jammy-docker"
+    os = "l26"
+    bios = "ovmf"
+    machine = "q35"
+    template_description = "Ubuntu Server jammy Docker Image"
 
     # VM OS Settings
     # (Option 1) Local ISO File
-    # iso_file = "local:iso/ubuntu-22.04-live-server-amd64.iso"
+    iso_file = "TrueNas:iso/ubuntu-22.04.2-live-server-amd64.iso"
     # - or -
     # (Option 2) Download ISO
     # iso_url = "https://releases.ubuntu.com/22.04/ubuntu-22.04-live-server-amd64.iso"
     # iso_checksum = "84aeaf7823c8c61baa0ae862d0a06b03409394800000b3235854a6b38eb4856f"
-    iso_storage_pool = "local"
+    iso_storage_pool = "TrueNas"
     unmount_iso = true
 
     # VM System Settings
@@ -48,16 +51,21 @@ source "proxmox" "ubuntu-server-jammy" {
     # VM Hard Disk Settings
     scsi_controller = "virtio-scsi-pci"
 
+    # EFI config
+    efi_config {
+        efi_storage_pool = "internrow1"
+        efi_type = "4m"
+    }
+
     disks {
         disk_size = "20G"
-        format = "qcow2"
-        storage_pool = "local-lvm"
-        storage_pool_type = "lvm"
+        format = "raw"
+        storage_pool = "internrow1"
         type = "virtio"
     }
 
     # VM CPU Settings
-    cores = "1"
+    cores = "2"
     
     # VM Memory Settings
     memory = "2048" 
@@ -66,12 +74,13 @@ source "proxmox" "ubuntu-server-jammy" {
     network_adapters {
         model = "virtio"
         bridge = "vmbr0"
+        vlan_tag = "70"
         firewall = "false"
     } 
 
     # VM Cloud-Init Settings
     cloud_init = true
-    cloud_init_storage_pool = "local-lvm"
+    cloud_init_storage_pool = "internrow1"
 
     # PACKER Boot Commands
     boot_command = [
@@ -83,22 +92,22 @@ source "proxmox" "ubuntu-server-jammy" {
         "<f10><wait>"
     ]
     boot = "c"
-    boot_wait = "5s"
+    boot_wait = "10s"
 
     # PACKER Autoinstall Settings
     http_directory = "http" 
     # (Optional) Bind IP Address and Port
-    # http_bind_address = "0.0.0.0"
-    # http_port_min = 8802
-    # http_port_max = 8802
+    http_bind_address = "192.168.70.31"
+    http_port_min = 8802
+    http_port_max = 8802
 
-    ssh_username = "your-user-name"
+    ssh_username = "dev"
 
     # (Option 1) Add your Password here
     # ssh_password = "your-password"
     # - or -
     # (Option 2) Add your Private SSH KEY file here
-    # ssh_private_key_file = "~/.ssh/id_rsa"
+    ssh_private_key_file = "~/.ssh/id_rsa"
 
     # Raise the timeout, when installation takes longer
     ssh_timeout = "20m"
@@ -107,8 +116,8 @@ source "proxmox" "ubuntu-server-jammy" {
 # Build Definition to create the VM Template
 build {
 
-    name = "ubuntu-server-jammy"
-    sources = ["source.proxmox.ubuntu-server-jammy"]
+    name = "ubuntu-server-jammy-docker"
+    sources = ["source.proxmox-iso.ubuntu-server-jammy-docker"]
 
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #1
     provisioner "shell" {

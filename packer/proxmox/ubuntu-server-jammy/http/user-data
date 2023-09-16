@@ -22,12 +22,12 @@ autoinstall:
     package_upgrade: false
     timezone: Europe/Berlin
     users:
-      - name: your-user-name
+      - name: dev
         groups: [adm, sudo]
         lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
         # passwd: your-password
         # - or -
-        # ssh_authorized_keys:
-        #   - your-ssh-key
+        ssh_authorized_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6W9mWUvaIQfW9PmPM3ZSWqXdQ7DNkD8kuC5tFbNNNKhSscGfFY5tOenzpK+ZtGsvJnUvgOT07/PCZxgfNGF45Gg479cqHO9SUR4+WL9eLn737BlvS3UGofkmGhGaiZBjilU+lfReD1N1mGhxlr49CbC2NiimtcjwuM8r1qVkVVtF+f7/7zY3hOlyd+rwXCtuCTQMDrCgwYhL06xDRwMCIpbv9NGrBGv3E7w2+I7zk4eloPHW/OGbAsnQCxRej5Yk4mmwfQ1Hm1Q14HKmllnvnLt9/5koSEfjzHEnn71y2uRkp+Vz4Ks+7ZIkyiPVZGsJ9AyMBP5KUS8jpJ/QrToF1 rsa-key-20211027
