@@ -1,1 +1,1 @@
-credentials.pkr.hcl
+packer/proxmox/credentials.pkr.hcl
