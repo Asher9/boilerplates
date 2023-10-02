@@ -11,36 +11,47 @@ resource "proxmox_vm_qemu" "your-vm" {
     desc = "Description"
 
     # VM Advanced General Settings
-    onboot = true 
+    # onboot = true 
 
     # VM OS Settings
-    clone = "your-clone"
+    clone = "ubuntu-server-jammy"
 
     # VM System Settings
     agent = 1
     
     # VM CPU Settings
-    cores = 1
+    cores = 2
     sockets = 1
-    cpu = "host"    
+    cpu = "x86-64-v2-AES"
+    bios = "ovmf"
+    scsihw = "virtio-scsi-pci"
     
     # VM Memory Settings
-    memory = 1024
+    memory = 2048
 
     # VM Network Settings
     network {
         bridge = "vmbr0"
         model  = "virtio"
+        tag = 40
     }
+
+    disk {
+        storage = "internrow1"
+        type = "virtio"
+        size = "20G"
+    } 
 
     # VM Cloud-Init Settings
     os_type = "cloud-init"
+    loudinit_cdrom_storage = "internrow1"
 
     # (Optional) IP Address and Gateway
     # ipconfig0 = "ip=0.0.0.0/0,gw=0.0.0.0"
+    ipconfig0 = "ip=dhcp"
     
     # (Optional) Default User
-    # ciuser = "your-username"
+    ciuser = "dev"
     
     # (Optional) Add your SSH KEY
     # sshkeys = <<EOF

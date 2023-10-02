@@ -1,1 +1,19 @@
 credentials.pkr.hcl
+# .vscode/**
+
+# **/.envrc
+# **/.env
+
+# **/.terraform
+# **/.terraform.lock.hcl
+# **/.terraform.tfstate.*
+# **/terraform.tfstate
+# **/terraform.tfstate.backup
+# **/*.auto.tfvars
+
+# **/*.auto.pkrvars.hcl
+# packer-*.log
+# packer_cache/
+# *.iso
+# *.box
+# *.ova
