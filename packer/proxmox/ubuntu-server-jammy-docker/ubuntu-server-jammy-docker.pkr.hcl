@@ -44,6 +44,7 @@ source "proxmox-iso" "ubuntu-server-jammy-docker" {
     # iso_checksum = "84aeaf7823c8c61baa0ae862d0a06b03409394800000b3235854a6b38eb4856f"
     iso_storage_pool = "TrueNas"
     unmount_iso = true
+    cloud_init  = false
 
     # VM System Settings
     qemu_agent = true
